@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <!--LOGO-->
+    <link href="static/images/logo.png" rel="icon" type="image/png">
+
+    <!-- Bootstrap CSS -->
+    <link href="static/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="static/css/bootstrap-grid.css" rel="stylesheet" type="text/css">
+    <link href="static/css/bootstrap-reboot.css" rel="stylesheet" type="text/css">
+
+    <title>Color Lightness Calculator</title>
+</head>
+
+<body>
+<!-- Image and text -->
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+        <img alt="" class="d-inline-block align-top" height="30" src="static/images/logo.png" width="30">
+        Color Lightness Calculator
+    </a>
+</nav>
+
+<div class="container">
+    <main class="col-lg-12  py-md-5 bd-content" role="main">
+        <div class="row">
+            <h4 class="bd-content-title">Enter your RGB format colour's values for red, green and blue:</h4>
+            <div class="col-lg-8">
+                <form class="py-md-4" id="form" method="post">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="red"><span class="text-danger font-weight-bold">RED:</span></label>
+                        <div class="col-sm-10">
+                            <input class="form-control" value="0" id="red" max="255" min="0" name="red" required="required" type="number">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="green"><span class="text-success font-weight-bold">GREEN:</span></label>
+                        <div class="col-sm-10">
+                            <input class="form-control" value="0" id="green" max="255" min="0" name="green" required="required" type="number">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="blue"><span class="text-primary font-weight-bold">BLUE:</span></label>
+                        <div class="col-sm-10">
+                            <input class="form-control" value="0" id="blue" max="255" min="0" name="blue" required="required" type="number">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-dark btn-lg btn-block" type="submit">Calculate</button>
+                </form>
+            </div>
+            <div class="col-lg-4 py-lg-4 py-md-4 py-sm-4 py-xs-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="color" style="background-color:rgb(0,0,0); height:169.391px;"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row" hidden="hidden" id="result-appear">
+            <div class="col-lg-12">
+                <div class="alert alert-secondary" role="alert">
+                    <h5> The lightness of the colour you have entered = <span id="result-number"></span> (<span id="result-normalized"></span> normalized)
+
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="static/js/bootstrap.bundle.js" type="text/javascript"></script>
+<script src="static/js/bootstrap.js" type="text/javascript"></script>
+<script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        setResultColour();
+
+        $('#red').on('input', function () {
+            setResultColour();
+        });
+
+        $('#green').on('input', function () {
+            setResultColour();
+        });
+
+        $('#blue').on('input', function () {
+            setResultColour();
+        });
+
+        function setResultColour() {
+            var r = $('#red').val();
+            var g = $('#green').val();
+            var b = $('#blue').val();
+
+            $("#color").css("background-color", "rgb(" + r + "," + g + "," + b + ")");
+        }
+
+        $('#form').submit(function () {
+
+            var res = Math.sqrt(
+                (Math.pow($('#red').val(), 2) * 0.299) +
+                (Math.pow($('#green').val(), 2) * 0.587) +
+                (Math.pow($('#blue').val(), 2) * 0.114));
+            var norm = res/255;
+            $('#result-number').html(res.toPrecision(4));
+            $('#result-normalized').html(norm.toPrecision(3));
+            $('#result-appear').removeAttr("hidden");
+            return false;
+
+
+        })
+
+    });
+</script>
+</body>
+</html>
